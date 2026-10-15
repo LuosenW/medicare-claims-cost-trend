@@ -29,7 +29,7 @@ tables <- c("category_year", "total_year", "trend", "hcc_summary",
 
 for (t in tables) {
   df <- dbGetQuery(con, paste0("SELECT * FROM metrics.", t, " ORDER BY ALL"))
-  write.csv(df, file.path(out_dir, paste0(t, ".csv")), row.names = FALSE)
+  write.csv(df, file.path(out_dir, paste0(t, ".csv")), row.names = FALSE, na = "")
   message("Exported ", t, " (", nrow(df), " rows)")
 }
 
@@ -50,7 +50,7 @@ bands <- dbGetQuery(con, "
   GROUP BY ALL
   ORDER BY ALL
 ")
-write.csv(bands, file.path(out_dir, "cost_bands.csv"), row.names = FALSE)
+write.csv(bands, file.path(out_dir, "cost_bands.csv"), row.names = FALSE, na = "")
 
 # Print the headline numbers you will quote in the README and resume
 print(dbGetQuery(con, "SELECT * FROM metrics.total_year ORDER BY year"))
